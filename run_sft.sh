@@ -4,16 +4,16 @@ lora_alpha=128
 lora_trainable="q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj"
 modules_to_save="embed_tokens,lm_head"
 lora_dropout=0.05
+seed=2023
 
 pretrained_model=/home/chli/github/textgen/models/chinese-alpaca-2-7b/
 chinese_tokenizer_path=/home/chli/github/textgen/models/chinese-alpaca-2-7b/
-dataset_dir=/home/chli/chLi/Sql-Dataset/data_test1_train.json
+dataset_dir=/home/chli/dataset/test1/train/
 per_device_train_batch_size=1
 per_device_eval_batch_size=4
 gradient_accumulation_steps=8
 output_dir=./output/
-peft_model=./output/peft/
-validation_file=/home/chli/chLi/Sql-Dataset/data_test1_val.json
+validation_file=/home/chli/dataset/test1/val/data_test1_val.json
 
 deepspeed_config_file=ds_zero2_no_offload.json
 
@@ -28,7 +28,7 @@ torchrun --nnodes 1 --nproc_per_node 1 run_clm_sft_with_peft.py \
 	--per_device_eval_batch_size ${per_device_eval_batch_size} \
 	--do_train \
 	--do_eval \
-	--seed $RANDOM \
+	--seed ${seed} \
 	--fp16 \
 	--num_train_epochs 1 \
 	--lr_scheduler_type cosine \
@@ -56,6 +56,6 @@ torchrun --nnodes 1 --nproc_per_node 1 run_clm_sft_with_peft.py \
 	--lora_dropout ${lora_dropout} \
 	--torch_dtype float16 \
 	--validation_file ${validation_file} \
-	--peft_path ${peft_model} \
 	--gradient_checkpointing \
-	--ddp_find_unused_parameters False
+	--ddp_find_unused_parameters False \
+	--flash_attn
