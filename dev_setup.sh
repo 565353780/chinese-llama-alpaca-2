@@ -7,4 +7,4 @@ git pull
 pip install -U -r requirements.txt
 
 pip install -U datasets scipy deepspeed einops packaging ninja
-MAX_JOBS=16 pip install flash-attn --no-build-isolation
+pip install -U flash-attn --no-build-isolation
