@@ -16,6 +16,21 @@ conda activate cla2
 
 ## Train
 
+prepare the dataset as:
+
+```bash
+<dataset-folder>
+|--train
+    |--<train-dataset>.json
+|--<val-dataset>.json
+```
+
+and set dataset_dir:
+
+```bash
+dataset_dir=<path-to-dataset-folder>/train/
+```
+
 ```bash
 ./run_sft.sh
 ```
